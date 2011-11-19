@@ -1,0 +1,78 @@
+*editvar.txt*	Edits vim variable in buffer.
+
+Version: 1.0
+Author : thinca <thinca+vim@gmail.com>
+License: zlib License
+
+==============================================================================
+CONTENTS					*editvar-contents*
+
+INTRODUCTION			|editvar-introduction|
+INTERFACE			|editvar-interface|
+  COMMANDS			  |editvar-commands|
+  FUNCTIONS			  |editvar-functions|
+CUSTOMIZING			|editvar-customizing|
+CHANGELOG			|editvar-changelog|
+
+
+==============================================================================
+INTRODUCTION					*editvar-introduction*
+
+*editvar* is a Vim plugin to edit vim variable in buffer.
+
+Requirements:
+- Vim 7.3 or later
+
+Optional:
+- prettyprint.vim (https://github.com/thinca/vim-prettyprint)
+
+Latest version:
+https://github.com/thinca/vim-editvar
+
+
+
+==============================================================================
+INTERFACE					*editvar-interface*
+
+------------------------------------------------------------------------------
+COMMANDS					*editvar-commands*
+
+:Editvar {var-name}				*:Editvar*
+	Opens a buffer to edit a vim variable.  You can update the value of
+	variable by |:write|.
+
+------------------------------------------------------------------------------
+FUNCTIONS					*editvar-functions*
+
+editvar#open({var-name})			*editvar#open()*
+	Function version of |:Editvar|.
+
+------------------------------------------------------------------------------
+PATHS						*editvar-paths*
+
+The following buffer names are processed by |editvar| plugin.
+
+editvar://{var-name}
+editvar://b:{var-name}/{bufnr}
+	A buffer to edit a vim variable.
+
+
+
+==============================================================================
+CUSTOMIZING					*editvar-customizing*
+
+g:editvar#opener				*g:editvar#opener*
+	|:Editvar| opens a buffer with this command.
+	The default value is |:new|.
+
+
+
+==============================================================================
+CHANGELOG					*editvar-changelog*
+
+1.0	2011-11-19
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
