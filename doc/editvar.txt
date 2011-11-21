@@ -11,7 +11,9 @@ INTRODUCTION			|editvar-introduction|
 INTERFACE			|editvar-interface|
   COMMANDS			  |editvar-commands|
   FUNCTIONS			  |editvar-functions|
+  PATHS				  |editvar-paths|
 CUSTOMIZING			|editvar-customizing|
+BUGS				|editvar-bugs|
 CHANGELOG			|editvar-changelog|
 
 
@@ -64,6 +66,15 @@ CUSTOMIZING					*editvar-customizing*
 g:editvar#opener				*g:editvar#opener*
 	|:Editvar| opens a buffer with this command.
 	The default value is |:new|.
+
+
+
+==============================================================================
+BUGS						*editvar-bugs*
+
+- Can't treat |numbered-function|.
+  - ex) function('1')
+  - This limitation is by Vim.
 
 
 
