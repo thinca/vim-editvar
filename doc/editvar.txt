@@ -1,6 +1,6 @@
 *editvar.txt*	Edits vim variable in buffer.
 
-Version: 1.0
+Version: 1.1
 Author : thinca <thinca+vim@gmail.com>
 License: zlib License
 
@@ -81,7 +81,7 @@ BUGS						*editvar-bugs*
 ==============================================================================
 CHANGELOG					*editvar-changelog*
 
-x.x.x	xxxx-xx-xx
+1.1	2011-11-21
 	- |:unlet| by empty buffer.
 
 1.0	2011-11-19
