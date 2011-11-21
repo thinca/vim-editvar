@@ -54,7 +54,7 @@ function! s:do_cmd(bufname, method) abort
     if exists('bufnr')
       let value = getbufvar(bufnr, name[2 :])
     else
-      let value = exists(name) ? eval(name) : ''
+      let value = exists(name) ? {name} : ''
     endif
     let str = exists('*PP') ? PP(value) : string(value)
     setlocal buftype=acwrite filetype=vim
