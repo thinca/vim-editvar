@@ -62,7 +62,7 @@ function! s:do_cmd(bufname, method) abort
     silent 1 delete _
 
   elseif a:method ==# 'write'
-    let value = eval(join(getline(1, '$'), ''))
+    sandbox let value = eval(join(getline(1, '$'), ''))
     if exists('bufnr')
       " Don't use setbufvar() to avoid E706
       let b = getbufvar(bufnr, '')
