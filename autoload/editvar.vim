@@ -52,24 +52,40 @@ function! s:do_cmd(bufname, method) abort
 
   if a:method ==# 'read'
     if exists('bufnr')
-      let value = getbufvar(bufnr, name[2 :])
-    else
-      let value = exists(name) ? {name} : ''
+      let b = getbufvar(bufnr, '')
+      let bname = name[2 :]
+      if has_key(b, bname)
+        let value = b[bname]
+      endif
+    elseif exists(name)
+      let value = {name}
     endif
-    let str = exists('*PP') ? PP(value) : string(value)
     setlocal buftype=acwrite filetype=vim
-    silent put =str
-    silent 1 delete _
+    if exists('value')
+      let str = exists('*PP') ? PP(value) : string(value)
+      silent put =str
+      silent 1 delete _
+    endif
 
   elseif a:method ==# 'write'
-    sandbox let value = eval(join(getline(1, '$'), ''))
+    let valstr = join(getline(1, '$'), '')
+    if valstr =~# '\S'
+      sandbox let value = eval(valstr)
+    endif
     if exists('bufnr')
       " Don't use setbufvar() to avoid E706
+      let bname = name[2 :]
       let b = getbufvar(bufnr, '')
-      let b[name[2 : ]] = value
+      if exists('value')
+        let b[bname] = value
+      elseif has_key(b, bname)
+        call remove(b, bname)
+      endif
     else
       unlet! {name}
-      let {name} = value
+      if exists('value')
+        let {name} = value
+      endif
     endif
   endif
   setlocal nomodified

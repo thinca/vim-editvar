@@ -81,6 +81,9 @@ BUGS						*editvar-bugs*
 ==============================================================================
 CHANGELOG					*editvar-changelog*
 
+x.x.x	xxxx-xx-xx
+	- |:unlet| by empty buffer.
+
 1.0	2011-11-19
 	- Initial version.
 
