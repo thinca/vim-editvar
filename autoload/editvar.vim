@@ -35,6 +35,7 @@ endfunction
 function! s:do_cmd(bufname, method) abort
   let varname = s:g(matchstr(a:bufname, 'editvar://\zs.*'))
 
+  let bufnr = 0  " use global var when bufnr = 0.
   if varname[: 1] ==# 'b:'
     let bufnr = matchstr(varname, '/\zs\d\+$') - 0
     if bufnr is 0
@@ -51,7 +52,7 @@ function! s:do_cmd(bufname, method) abort
   endif
 
   if a:method ==# 'read'
-    if exists('bufnr')
+    if bufnr
       let b = getbufvar(bufnr, '')
       let bname = name[2 :]
       if has_key(b, bname)
@@ -72,7 +73,7 @@ function! s:do_cmd(bufname, method) abort
     if valstr =~# '\S'
       sandbox let value = eval(valstr)
     endif
-    if exists('bufnr')
+    if bufnr
       " Don't use setbufvar() to avoid E706
       let bname = name[2 :]
       let b = getbufvar(bufnr, '')
