@@ -81,6 +81,9 @@ BUGS						*editvar-bugs*
 ==============================================================================
 CHANGELOG					*editvar-changelog*
 
+x.x	xxxx-xx-xx
+	- Supported the autoload variable which has not loaded.
+
 1.1	2011-11-21
 	- |:unlet| by empty buffer.
 

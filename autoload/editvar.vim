@@ -58,8 +58,11 @@ function! s:do_cmd(bufname, method) abort
       if has_key(b, bname)
         let value = b[bname]
       endif
-    elseif exists(name)
-      let value = {name}
+    else
+      try
+        let value = {name}
+      catch /^Vim(let):E121:/
+      endtry
     endif
     setlocal buftype=acwrite filetype=vim
     if exists('value')
