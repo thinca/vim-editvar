@@ -1,0 +1,62 @@
+*unite-variable.txt*	unite source: variable
+
+Version: 1.0
+Author : thinca <thinca+vim@gmail.com>
+License: zlib License
+
+==============================================================================
+CONTENTS					*unite-variable-contents*
+
+INTRODUCTION			|unite-variable-introduction|
+SOURCES				|unite-variable-sources|
+ACTIONS				|unite-variable-actions|
+ISSUES				|unite-variable-issues|
+CHANGELOG			|unite-variable-changelog|
+
+
+
+==============================================================================
+INTRODUCTION					*unite-variable-introduction*
+
+*unite-variable* is a source of |unite| for vim variables.
+
+Requirements:
+- Vim 7.3 or later
+- unite.vim (https://github.com/Shougo/unite.vim)
+
+
+
+==============================================================================
+SOURCES						*unite-variable-sources*
+
+						*unite-source-variable*
+variable	Nominates |global-variable| as candidates.
+
+
+
+==============================================================================
+ACTIONS						*unite-variable-actions*
+
+variable					*unite-action-variable*
+	edit		Edits this variable with |editvar| plugin.
+	delete		Unlets the variables.
+	preview		Previews the variable.
+
+
+
+==============================================================================
+ISSUES						*unite-variable-issues*
+
+- preview action doesn't work well with -auto-preview and some case.
+
+
+
+==============================================================================
+CHANGELOG					*unite-variable-changelog*
+
+1.0	2012-02-20
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
