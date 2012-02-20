@@ -60,6 +60,9 @@ editvar://{var-name}
 editvar://b:{var-name}/{bufnr}
 	A buffer to edit a vim variable.
 
+editvar://@{reg-name}
+	A buffer to edit a |registers|.
+
 
 
 ==============================================================================
@@ -86,6 +89,7 @@ CHANGELOG					*editvar-changelog*
 x.x	xxxx-xx-xx
 	- Supported the autoload variable which has not loaded.
 	- Added |unite-variable|.
+	- Added |registers| support.
 
 1.1	2011-11-21
 	- |:unlet| by empty buffer.

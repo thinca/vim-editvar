@@ -29,7 +29,7 @@ function! editvar#write(bufname)
 endfunction
 
 function! s:g(var)
-  return a:var[1] ==# ':' ? a:var : 'g:' . a:var
+  return a:var =~# '^@.$' || a:var[1] ==# ':' ? a:var : 'g:' . a:var
 endfunction
 
 function! s:do_cmd(bufname, method) abort
@@ -46,7 +46,7 @@ function! s:do_cmd(bufname, method) abort
     endif
   endif
 
-  let name = matchstr(varname, '^[[:alnum:]_:#]\+$')
+  let name = matchstr(varname, '^\%(@.\|[[:alnum:]_:#]\+\)$')
   if name ==# ''
     throw 'editvar: Invalid variable name: ' . varname
   endif
@@ -60,7 +60,7 @@ function! s:do_cmd(bufname, method) abort
       endif
     else
       try
-        let value = {name}
+        let value = eval(name)
       catch /^Vim(let):E121:/
       endtry
     endif
@@ -85,6 +85,8 @@ function! s:do_cmd(bufname, method) abort
       elseif has_key(b, bname)
         call remove(b, bname)
       endif
+    elseif name =~# '^@.$'
+      execute 'let' name '= value'
     else
       unlet! {name}
       if exists('value')
