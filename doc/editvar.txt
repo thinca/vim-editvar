@@ -13,8 +13,9 @@ INTERFACE			|editvar-interface|
   FUNCTIONS			  |editvar-functions|
   PATHS				  |editvar-paths|
 CUSTOMIZING			|editvar-customizing|
-BUGS				|editvar-bugs|
+ISSUES				|editvar-issues|
 CHANGELOG			|editvar-changelog|
+
 
 
 ==============================================================================
@@ -75,7 +76,7 @@ g:editvar#opener				*g:editvar#opener*
 
 
 ==============================================================================
-BUGS						*editvar-bugs*
+ISSUES						*editvar-issues*
 
 - Can't treat |numbered-function|.
   - ex) function('1')
