@@ -66,7 +66,17 @@ function! s:do_cmd(bufname, method) abort
     endif
     setlocal buftype=acwrite filetype=vim
     if exists('value')
-      let str = exists('*PP') ? PP(value) : string(value)
+      if exists('*PP')
+        let pp_string = g:prettyprint_string
+        let g:prettyprint_string = ['split', 'raw']
+        try
+          let str = PP(value)
+        finally
+          let g:prettyprint_string = pp_string
+        endtry
+      else
+        let str = string(value)
+      endif
       silent put =str
       silent 1 delete _
     endif
