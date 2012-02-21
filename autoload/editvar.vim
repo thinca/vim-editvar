@@ -7,6 +7,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let g:editvar#opener = get(g:, 'g:editvar#opener', 'new')
+let g:editvar#string = get(g:, 'g:editvar#string', 1)
 
 function! editvar#open(varname)
   let args = s:g(a:varname)
@@ -64,9 +65,17 @@ function! s:do_cmd(bufname, method) abort
       catch /^Vim(let):E121:/
       endtry
     endif
-    setlocal buftype=acwrite filetype=vim
+    setlocal buftype=acwrite
+    let b:editvar_string = 0
     if exists('value')
-      if exists('*PP')
+      if g:editvar#string && type(value) == type('')
+        let b:editvar_string = g:editvar#string
+        let str = value
+        if str =~# "\n$"
+          let str .= "\n"
+        endif
+        let b:editvar_sep = "\n"
+      elseif exists('*PP')
         let pp_string = g:prettyprint_string
         let g:prettyprint_string = ['split', 'raw']
         try
@@ -81,10 +90,15 @@ function! s:do_cmd(bufname, method) abort
       silent put =str
       silent 1 delete _
     endif
+    if !b:editvar_string
+      setlocal filetype=vim
+    endif
 
   elseif a:method ==# 'write'
     let valstr = join(getline(1, '$'), get(b:, 'editvar_sep', ''))
-    if valstr =~# '\S'
+    if b:editvar_string
+      let value = valstr
+    elseif valstr =~# '\S'
       sandbox let value = eval(valstr)
     endif
     if bufnr

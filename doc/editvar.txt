@@ -73,6 +73,11 @@ g:editvar#opener				*g:editvar#opener*
 	|:Editvar| opens a buffer with this command.
 	The default value is |:new|.
 
+g:editvar#string				*g:editvar#string*
+	If this value is true, enables string mode.
+	If value of variable is string, you can edit it directly(not literal).
+	The default value is 1.
+
 
 
 ==============================================================================
@@ -91,6 +96,7 @@ x.x	xxxx-xx-xx
 	- Supported the autoload variable which has not loaded.
 	- Added |unite-variable|.
 	- Added |registers| support.
+	- Added |g:editvar#string| option.
 
 1.1	2011-11-21
 	- |:unlet| by empty buffer.
