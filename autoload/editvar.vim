@@ -1,5 +1,5 @@
 " Edits vim variable in buffer.
-" Version: 1.1
+" Version: 2.0
 " Author : thinca <thinca+vim@gmail.com>
 " License: zlib License
 

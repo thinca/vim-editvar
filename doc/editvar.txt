@@ -1,6 +1,6 @@
 *editvar.txt*	Edits vim variable in buffer.
 
-Version: 1.1
+Version: 2.0
 Author : thinca <thinca+vim@gmail.com>
 License: zlib License
 
@@ -104,7 +104,7 @@ ISSUES						*editvar-issues*
 ==============================================================================
 CHANGELOG					*editvar-changelog*
 
-x.x	xxxx-xx-xx
+2.0	2012-02-21
 	- Supported the autoload variable which has not loaded.
 	- Added |unite-variable|.
 	- Added |registers| support.
