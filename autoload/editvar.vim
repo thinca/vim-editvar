@@ -6,8 +6,8 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:editvar#opener = get(g:, 'g:editvar#opener', 'new')
-let g:editvar#string = get(g:, 'g:editvar#string', 1)
+let g:editvar#opener = get(g:, 'editvar#opener', 'new')
+let g:editvar#string = get(g:, 'editvar#string', 1)
 
 function! editvar#open(varname)
   let [args, bufnr] = s:normalize(a:varname, bufnr('%'))
