@@ -39,11 +39,18 @@ function! s:source.hooks.on_init(args, context)
 endfunction
 
 function! s:source.gather_candidates(args, context)
-  return sort(values(map(copy(a:context.source__target), '{
-  \   "word": v:key,
-  \   "abbr": a:context.source__prefix . v:key . " = " . s:string(v:val),
-  \   "action__name": a:context.source__prefix . v:key,
-  \ }')))
+  let target = a:context.source__target
+  let result = []
+  for key in keys(target)
+    let text = s:string(target[key])
+    let result += [{
+    \   "word": key,
+    \   "abbr": a:context.source__prefix . key . " = " . text,
+    \   "action__name": a:context.source__prefix . key,
+    \   "action__text": text,
+    \ }]
+  endfor
+  return unite#util#sort_by(result, 'v:val.word')
 endfunction
 
 function! s:source.action_table.edit.func(candidate)
