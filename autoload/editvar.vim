@@ -47,18 +47,21 @@ function! s:do_cmd(bufname, method) abort
     endif
   endif
 
-  let name = matchstr(varname, '^\%(@.\|[[:alnum:]_:#]\+\)$')
+  let name = matchstr(varname, '^\%(@.\|[[:alnum:]_:#.]\+\)$')
   if name ==# ''
     throw 'editvar: Invalid variable name: ' . varname
   endif
 
   if a:method ==# 'read'
     if bufnr
-      let b = getbufvar(bufnr, '')
-      let bname = name[2 :]
-      if has_key(b, bname)
-        let value = b[bname]
-      endif
+      let value = getbufvar(bufnr, '')
+      for n in split(name[2 :], '\.')
+        if !has_key(value, n)
+          unlet! value
+          break
+        endif
+        let l:['value'] = value[n]
+      endfor
     else
       try
         let value = eval(name)
@@ -102,24 +105,35 @@ function! s:do_cmd(bufname, method) abort
       sandbox let value = eval(valstr)
     endif
     if bufnr
-      " Don't use setbufvar() to avoid E706
-      let bname = name[2 :]
-      let b = getbufvar(bufnr, '')
-      if exists('value')
-        let b[bname] = value
-      elseif has_key(b, bname)
-        call remove(b, bname)
-      endif
+      call s:write_var(getbufvar(bufnr, ''), name[2 :], l:)
     elseif name =~# '^@.$'
       execute 'let' name '= value'
     else
-      unlet! {name}
-      if exists('value')
-        let {name} = value
-      endif
+      call s:write_var(g:, name[2 :], l:)
     endif
   endif
   setlocal nomodified
+endfunction
+
+function! s:write_var(dict, name, l)
+  let dict = a:dict
+  let names = split(a:name, '\.')
+  for n in names[: -2]
+    if !has_key(dict, n) || type(dict[n]) != type({})
+      let dict[n] = {}
+    endif
+    let dict = dict[n]
+  endfor
+  let key = empty(names) ? '' : names[-1]
+  if has_key(a:l, 'value')
+    if key ==# ''
+      call extend(dict, a:l.value)
+    else
+      let dict[key] = a:l.value
+    endif
+  elseif has_key(dict, key)
+    call remove(dict, key)
+  endif
 endfunction
 
 let &cpo = s:save_cpo
