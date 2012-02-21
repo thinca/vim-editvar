@@ -76,13 +76,14 @@ function! s:do_cmd(bufname, method) abort
         endtry
       else
         let str = string(value)
+        let b:editvar_sep = "\n"
       endif
       silent put =str
       silent 1 delete _
     endif
 
   elseif a:method ==# 'write'
-    let valstr = join(getline(1, '$'), '')
+    let valstr = join(getline(1, '$'), get(b:, 'editvar_sep', ''))
     if valstr =~# '\S'
       sandbox let value = eval(valstr)
     endif
