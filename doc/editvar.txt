@@ -86,6 +86,7 @@ ISSUES						*editvar-issues*
 - Can't treat |numbered-function|.
   - ex) function('1')
   - This limitation is by Vim.
+- Can't treat nested structure.
 
 
 
