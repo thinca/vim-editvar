@@ -48,9 +48,10 @@ COMMANDS					*editvar-commands*
 	{var-name} is like followings.
 	- var_name   (This is global variable)
 	- g:TheVariable
-	- b:var_name
 	- g:editvar#opener
 	- g:foo.bar.buz
+	- b:var_name
+	- 10/b:var_name
 	- b:
 	The form of dictionary value like g:dict["key"] is not supported.
 
@@ -66,8 +67,10 @@ PATHS						*editvar-paths*
 The following buffer names are processed by |editvar| plugin.
 
 editvar://{var-name}
-editvar://b:{var-name}/{bufnr}
-	A buffer to edit a vim variable.
+	A buffer to edit a global vim variable.
+
+editvar://{bufnr}/[b:]{var-name}
+	A buffer to edit a buffer local vim variable.
 
 editvar://@{reg-name}
 	A buffer to edit a |registers|.
@@ -107,6 +110,7 @@ x.x	xxxx-xx-xx
 	- Added |registers| support.
 	- Added dictionary's value support.
 	- Added |g:editvar#string| option.
+	- Changed path for buffer local variable.
 
 1.1	2011-11-21
 	- |:unlet| by empty buffer.

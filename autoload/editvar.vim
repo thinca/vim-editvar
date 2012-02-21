@@ -10,13 +10,9 @@ let g:editvar#opener = get(g:, 'g:editvar#opener', 'new')
 let g:editvar#string = get(g:, 'g:editvar#string', 1)
 
 function! editvar#open(varname)
-  let args = s:g(a:varname)
-  if a:varname[: 1] ==# 'b:'
-    let bufnr = matchstr(a:varname, '/\zs\d\+$') - 0
-    if bufnr is 0
-      let bufnr = bufnr('%')
-    endif
-    let args .= '/' . bufnr
+  let [args, bufnr] = s:normalize(a:varname, bufnr('%'))
+  if bufnr
+    let args = bufnr . '/' . args
   endif
   execute g:editvar#opener '`="editvar://" . args`'
 endfunction
@@ -29,23 +25,26 @@ function! editvar#write(bufname)
   call s:do_cmd(a:bufname, 'write')
 endfunction
 
-function! s:g(var)
-  return a:var =~# '^@.$' || a:var[1] ==# ':' ? a:var : 'g:' . a:var
+function! s:normalize(var, defbufnr)
+  let bufnr = 0
+  let varname = a:var
+  if varname =~# '^\d\+/'
+    let bufnr = matchstr(varname, '^\d\+') - 0
+    let varname = matchstr(varname, '^\d\+/\zs.*')
+  endif
+  if varname !~# '^@.$' && varname[1] !=# ':'
+    let varname = (bufnr ? 'b:' : 'g:') . varname
+  endif
+  if varname[: 1] ==# 'b:' && bufnr == 0
+    let bufnr = a:defbufnr
+  endif
+  return [varname, bufnr]
 endfunction
 
 function! s:do_cmd(bufname, method) abort
-  let varname = s:g(matchstr(a:bufname, 'editvar://\zs.*'))
-
-  let bufnr = 0  " use global var when bufnr = 0.
-  if varname[: 1] ==# 'b:'
-    let bufnr = matchstr(varname, '/\zs\d\+$') - 0
-    if bufnr is 0
-      let bufnr = get(b:, 'editvar_bufnr', bufnr('#'))
-      let b:editvar_bufnr = bufnr
-    else
-      let varname = matchstr(varname, '^.*\ze/\d\+$')
-    endif
-  endif
+  let varname = matchstr(a:bufname, 'editvar://\zs.*')
+  let bufnr = get(b:, 'editvar_bufnr', bufnr('#'))
+  let [varname, bufnr] = s:normalize(varname, bufnr)
 
   let name = matchstr(varname, '^\%(@.\|[[:alnum:]_:#.]\+\)$')
   if name ==# ''
